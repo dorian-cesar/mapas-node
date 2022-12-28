@@ -16,17 +16,30 @@
 
 
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin=""></script>
-   <script>
-    var map = L.map('mapa').setView([-33.45813456197835, -70.68412597409207], 16);
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="">
+        </script>
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+    <script>
+        var map = L.map('mapa').setView([-33.45813456197835, -70.68412597409207], 16);
 
-var marker = L.marker([-33.45813456197835, -70.68412597409207],{color:'red'}).addTo(map);
-   </script>
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        map.locate({enableHighaccuracy:true});
+        
+        map.on('locationfound',e=>{
+            console.log(e);
+            const coor = [e.latlng.lat,e.latlng.lng];
+            var marker = L.marker(coor, { color: 'red' }).addTo(map);
+            marker.bindPopup('Aqui estoy');
+            map.addLayer(marker);
+            
+        });
+
+        
+    </script>
+
 </body>
 </html>
